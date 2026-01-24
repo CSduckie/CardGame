@@ -86,7 +86,7 @@ public class GamePlayPanel : MonoBehaviour
         }
 
         //获取当前临时增加的伤害
-        GameBoardController gameBoard = FindObjectOfType<GameBoardController>();
+        GameBoardController gameBoard = FindFirstObjectByType<GameBoardController>();
         int tempAddValue = gameBoard.tempAddValue;
         int tempMultiplyValue = gameBoard.tempMultiplyValue;
 

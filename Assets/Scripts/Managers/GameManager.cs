@@ -7,12 +7,39 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public GamePlayPanel gamePlayPanel;
 
+
+    [Header("其他Manager")]
+    public GameBoardController gameBoardController;
+    public CardDeck cardDeck;
+    
+    [Header("游戏是否失败")]
+    public bool isGameFailed = false;
+
+    [Header("事件广播")]
+    public ObjectEventSO gameFailedEvent;
+
     
     public static GameManager Instance;
     private void Awake()
     {
         Instance = this;
+        cardDeck = FindFirstObjectByType<CardDeck>();
     }
+
+    /// <summary>
+    /// 检查游戏是否失败
+    /// </summary>
+    public void CheckGameFailed()
+    {
+        if(!gameBoardController.CheckHasSoilderOnBoard() && cardDeck.hasMoreCardToDraw)
+        {
+            isGameFailed = true;
+            Debug.Log("游戏失败");
+            //启动游戏失败事件
+            gameFailedEvent.RaisEvent(null, this);
+        }
+    }
+
 
     /// <summary>
     /// 更新房间的事件

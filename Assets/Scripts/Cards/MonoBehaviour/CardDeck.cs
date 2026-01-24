@@ -14,6 +14,8 @@ public class CardDeck : MonoBehaviour
 
     public Vector3 cardDeckPosition = new(0, 0, 0);
 
+    //是否还有待抽的牌
+    public bool hasMoreCardToDraw = true;
 
     //测试用
     private void Start()
@@ -50,6 +52,20 @@ public class CardDeck : MonoBehaviour
     private void DrawCard(int amount)
     {
         int drawAmount;
+        //如果抽牌堆为空，则不抽牌，且
+        if(drawDeck.Count == 0)
+        {
+            if(!hasMoreCardToDraw)
+            {
+                hasMoreCardToDraw = false;
+                //启动事件告诉GameManager没有待抽的牌了
+                //于GameManager中添加事件监听，当没有待抽的牌时，调用GameManager中的方法
+            }
+            Debug.Log("No more card to draw");
+            return;
+        }
+
+
         if(amount > drawDeck.Count)
         {
             drawAmount = drawDeck.Count;
@@ -58,6 +74,7 @@ public class CardDeck : MonoBehaviour
         {
             drawAmount = amount;
         }
+
         for (int i = 0; i < drawAmount; i++)
         {
             if (drawDeck.Count == 0)

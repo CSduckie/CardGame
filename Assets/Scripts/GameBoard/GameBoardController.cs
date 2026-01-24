@@ -14,7 +14,8 @@ public class GameBoardController : MonoBehaviour
 
     private void Start()
     {
-        gamePlayPanel = FindObjectOfType<GamePlayPanel>();
+        GameManager.Instance.gameBoardController = this;
+        gamePlayPanel = FindFirstObjectByType<GamePlayPanel>();
         gamePlayPanel.gameBoardController = this;
     }
 
@@ -99,7 +100,7 @@ public class GameBoardController : MonoBehaviour
 
         //更新敌人UI
         //通知敌人
-        EnemyController enemy = FindObjectOfType<EnemyController>();
+        EnemyController enemy = FindFirstObjectByType<EnemyController>();
         enemy.TakeDamage(totalDamage);
 
         //清空临时增加的伤害
@@ -154,5 +155,21 @@ public class GameBoardController : MonoBehaviour
         //全部执行完成后，计算总伤害
         totalDamage = addValue * multiplyValue;
         gamePlayPanel.enemyUI.UpdateEnemyPredictHealth(totalDamage);
+    }
+
+    //检查棋盘是否还有士兵
+    public bool CheckHasSoilderOnBoard()
+    {
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            if(transform.GetChild(i).GetComponent<SlotController>().currentCard != null)
+            {
+                if(transform.GetChild(i).GetComponent<SlotController>().currentCard.cardType == CardType.Soldier)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

@@ -5,7 +5,7 @@ public class AddaddValueEffect : Effect
 {
     public override void Execute(Card from)
     {
-        GameBoardController gameBoard = FindObjectOfType<GameBoardController>();
+        GameBoardController gameBoard = FindFirstObjectByType<GameBoardController>();
         gameBoard.UpdateTempDamage(false, value);
         GameManager.Instance.gamePlayPanel.UpdateDamageUI();
         //更新伤害预测

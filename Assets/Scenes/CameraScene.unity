@@ -775,6 +775,7 @@ GameObject:
   - component: {fileID: 671247129}
   - component: {fileID: 671247128}
   - component: {fileID: 671247130}
+  - component: {fileID: 671247131}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -796,6 +797,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   mapLayout: {fileID: 11400000, guid: 2256d143f3570554685983a31fb23451, type: 2}
   gamePlayPanel: {fileID: 1821026855}
+  gameBoardController: {fileID: 0}
+  cardDeck: {fileID: 0}
+  isGameFailed: 0
+  gameFailedEvent: {fileID: 11400000, guid: fa006c7979a4cc74590a7f2a62bc7414, type: 2}
 --- !u!4 &671247129
 Transform:
   m_ObjectHideFlags: 0
@@ -831,6 +836,34 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: UpdateMapLayoutData
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &671247131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 671247127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ba3f1d21b26a348a6e991530f81729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectEventListener
+  eventSO: {fileID: 11400000, guid: 36e216ce613577742ad681812c6ddf9e, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 671247128}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: CheckGameFailed
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2560,6 +2593,7 @@ GameObject:
   - component: {fileID: 1799964784}
   - component: {fileID: 1799964785}
   - component: {fileID: 1799964786}
+  - component: {fileID: 1799964787}
   m_Layer: 0
   m_Name: TurnBase Manager
   m_TagString: Untagged
@@ -2670,6 +2704,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectEventListener
   eventSO: {fileID: 11400000, guid: d9c155a51f68f084f85cb2e9815443b9, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1799964783}
+        m_TargetAssemblyTypeName: TurnBaseManager, Assembly-CSharp
+        m_MethodName: GameEnd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1799964787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799964781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ba3f1d21b26a348a6e991530f81729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectEventListener
+  eventSO: {fileID: 11400000, guid: fa006c7979a4cc74590a7f2a62bc7414, type: 2}
   response:
     m_PersistentCalls:
       m_Calls:
@@ -3114,6 +3176,7 @@ MonoBehaviour:
   layoutManager: {fileID: 1380759446}
   drawDeck: []
   cardDeckPosition: {x: 0, y: 0, z: 0}
+  hasMoreCardToDraw: 1
 --- !u!4 &1901466513
 Transform:
   m_ObjectHideFlags: 0
