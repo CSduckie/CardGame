@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c19c86441a067fe49b868a30b9ee215e, type: 3}
-  m_Name: AfterRoomLoaded Event
+  m_Name: UpdateRoom Event
   m_EditorClassIdentifier: Assembly-CSharp::ObjectEventSO
-  description: "\u623F\u95F4\u8FDB\u5165\u540E\u7684\u4E8B\u4EF6\n"
+  description: "\u4F20\u9012Vector2Int\u66F4\u65B0\u623F\u95F4\u72B6\u6001"
   lastSender: 

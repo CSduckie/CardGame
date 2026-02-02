@@ -6,15 +6,17 @@ public class GameManager : MonoBehaviour
     public MapLayoutSO mapLayout;
     [Header("UI")]
     public GamePlayPanel gamePlayPanel;
-
-
+    public GameObject gameWinPanel;
+    public GameObject gameLosePanel;
+    public GameObject pickCardPanel;
+    
     [Header("其他Manager")]
     public GameBoardController gameBoardController;
     public CardDeck cardDeck;
     
     [Header("游戏是否失败")]
     public bool isGameFailed = false;
-
+    public bool isFirstTurn = true;
     [Header("事件广播")]
     public ObjectEventSO gameFailedEvent;
 
@@ -24,6 +26,7 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         cardDeck = FindFirstObjectByType<CardDeck>();
+        isGameFailed = false;
     }
 
     /// <summary>
@@ -33,6 +36,11 @@ public class GameManager : MonoBehaviour
     {
         if(!gameBoardController.CheckHasSoilderOnBoard() && cardDeck.hasMoreCardToDraw)
         {
+            if(isFirstTurn)
+            {
+                isFirstTurn = false;
+                return;
+            }
             isGameFailed = true;
             Debug.Log("游戏失败");
             //启动游戏失败事件
@@ -48,6 +56,9 @@ public class GameManager : MonoBehaviour
     public void UpdateMapLayoutData(object value)
     {
         var roomVector = (Vector2Int)value;
+
+        if(mapLayout.mapRoomDataList.Count == 0) return;
+
         //根据传输进来的roomVector查找符合某些属性的列表
         var currentRoom = mapLayout.mapRoomDataList.Find(r => r.colum == roomVector.x && r.line == roomVector.y);
 
@@ -69,4 +80,49 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    #region UI控制
+    public void ActiveGamePlayUI()
+    {
+        gamePlayPanel.gameObject.SetActive(true);
+    }
+
+    public void ActiveGameWinUI()
+    {
+        gameWinPanel.gameObject.SetActive(true);
+    }
+
+    public void ActiveGameLoseUI()
+    {
+        gameLosePanel.gameObject.SetActive(true);
+        gamePlayPanel.gameObject.SetActive(false);
+        gameWinPanel.gameObject.SetActive(false);
+        pickCardPanel.gameObject.SetActive(false);
+    }
+
+    public void DisableAllUI()
+    {
+        gamePlayPanel.gameObject.SetActive(false);
+        gameWinPanel.gameObject.SetActive(false);
+        pickCardPanel.gameObject.SetActive(false);
+        gameLosePanel.gameObject.SetActive(false);
+    }
+
+    public void ActivePickCardUI()
+    {
+        pickCardPanel.gameObject.SetActive(true);
+        gameWinPanel.gameObject.SetActive(false);
+        pickCardPanel.gameObject.SetActive(false);
+        gameLosePanel.gameObject.SetActive(false);
+    }
+
+    #endregion
+
+
+    //新游戏开始时，清除游戏地图数据
+    public void OnNewGameEvent()
+    {
+        Debug.Log("新游戏开始，清除游戏地图数据");
+        mapLayout.mapRoomDataList.Clear();
+        mapLayout.linePositionsList.Clear();
+    }
 }

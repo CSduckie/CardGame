@@ -13,11 +13,11 @@ public class EnemyController : MonoBehaviour
         enemyUI = FindFirstObjectByType<EnemyUIController>();
         currentHealth = health;
         enemyUI.enemyController = this;
+        enemyUI.InitializeEnemyUI();
     }
 
     public void TakeDamage(float damage)
     {
-        
         currentHealth -= damage;
         if(currentHealth <= 0)
         {

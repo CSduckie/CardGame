@@ -15,8 +15,26 @@ MonoBehaviour:
   m_GroupName: Card
   m_GUID: 9abef10d12a6cf741b4a3f9734153521
   m_SerializeEntries:
+  - m_GUID: 900678c32990ac64faf9c22e2ff9d0ab
+    m_Address: Commander
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CardData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9022a0c41448c2645b5500496ed83db7
+    m_Address: AddMultiplySkill
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CardData
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a296d6a9e63dc064f9c0b0f0c5b902c1
     m_Address: Knight
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CardData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b38c0587f1b215d4eb9049bcdec8cfbf
+    m_Address: AddValueSkill
     m_ReadOnly: 0
     m_SerializedLabels:
     - CardData

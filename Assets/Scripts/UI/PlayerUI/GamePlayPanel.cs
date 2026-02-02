@@ -26,9 +26,20 @@ public class GamePlayPanel : MonoBehaviour
         buffUIPanel = transform.GetChild(1).gameObject;
     }
 
+    public void OnPlayerTurnStart()
+    {
+        //检查棋盘上是否有卡牌，如果有，则启动结束回合按钮
+        if(gameBoardController.CheckHasSoilderOnBoard())
+            endTurnButton.interactable = true;
+        else
+            endTurnButton.interactable = false;
+
+    }
+
     public void OnPlayerTurnEnd()
     {
         playerTurnEndEvent.RaisEvent(null, this);
+        endTurnButton.interactable = false;
     }
 
     //计算棋盘生成时，最上方一列的数据

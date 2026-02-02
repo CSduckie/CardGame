@@ -17,7 +17,7 @@ public class CardDeck : MonoBehaviour
     //是否还有待抽的牌
     public bool hasMoreCardToDraw = true;
 
-    //测试用
+    //TODO:测试用，后续删除
     private void Start()
     {
         InitializeDeck();
@@ -51,6 +51,7 @@ public class CardDeck : MonoBehaviour
 
     private void DrawCard(int amount)
     {
+        if(GameManager.Instance.isGameFailed) return;
         int drawAmount;
         //如果抽牌堆为空，则不抽牌，且
         if(drawDeck.Count == 0)
@@ -59,7 +60,7 @@ public class CardDeck : MonoBehaviour
             {
                 hasMoreCardToDraw = false;
                 //启动事件告诉GameManager没有待抽的牌了
-                //于GameManager中添加事件监听，当没有待抽的牌时，调用GameManager中的方法
+                //于GameManager中调用
             }
             Debug.Log("No more card to draw");
             return;
@@ -157,4 +158,21 @@ public class CardDeck : MonoBehaviour
         SetCardLayout(0);
         //TODO:更新UI
     }
+
+    /// <summary>
+    /// 弃掉所有的手牌，并返回抽牌堆
+    /// 用于游戏结束时调用
+    /// </summary>
+    public void ReleaseAllCards(object obj)
+    {
+        foreach(var card in handCardObjectList)
+        {
+            cardManager.DiscardCard(card.gameObject);
+        }
+        handCardObjectList.Clear();
+        hasMoreCardToDraw = true;
+        InitializeDeck();
+    }
+
+
 }

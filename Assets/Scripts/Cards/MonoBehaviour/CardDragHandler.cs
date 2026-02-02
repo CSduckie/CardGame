@@ -61,6 +61,9 @@ public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                         //Debug.Log("Card Placed Effect");
                     }
                     currentCard.isPlaced = true;
+                    //启动事件告诉GameManager卡牌放置成功
+                    //激活结束回合按钮
+                    GameManager.Instance.gamePlayPanel.endTurnButton.interactable = true;
                 }
                 else
                 {

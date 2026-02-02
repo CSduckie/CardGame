@@ -52,6 +52,7 @@ public class TurnBaseManager : MonoBehaviour
         isEnemyTurn = false;
         battleEnd = false;
         timeCounter = 0;
+        GameManager.Instance.ActiveGamePlayUI();
     }
 
 
@@ -77,6 +78,34 @@ public class TurnBaseManager : MonoBehaviour
     }
 
     public void GameEnd()
+    {
+        battleEnd = true;
+        Debug.Log("Game End");
+    }
+
+    /// <summary>
+    /// 房间加载后的逻辑
+    /// </summary>
+    public void OnRoomLoadedEvent(object obj)
+    {
+        Room room = obj as Room;
+        Debug.Log(room.roomData.roomType);
+        switch(room.roomData.roomType)
+        {
+            case RoomType.MinorEnemy:
+            case RoomType.EliteEnemy:
+            case RoomType.Boss:
+                Debug.Log("战斗开始");
+                GameStart();
+                break;
+            case RoomType.Shop:
+                break;
+            case RoomType.Reward:
+                break;
+        }
+    }
+
+    public void OnLoadMapEvent()
     {
         battleEnd = true;
     }

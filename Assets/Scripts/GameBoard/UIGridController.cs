@@ -12,7 +12,7 @@ public class UIGridController : MonoBehaviour
     public ObjectEventSO gameStartEvent;
     void Start()
     {
-        Invoke("CreateGrid",2);
+        Invoke("CreateGrid",1);
     }
 
     void CreateGrid()
