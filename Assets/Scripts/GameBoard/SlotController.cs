@@ -5,18 +5,26 @@ public class SlotController : MonoBehaviour
     [Header("slot信息")]
     public int value;
     public bool isMultiply = false;
-
-    
     public bool isEmpty = true;
     public Card currentCard;
     
     [Header("slot自己的坐标位置")]
     public int Raw, Column;
 
+    [Header("slot的视觉效果")]
+    public Material activeMaterial;
+    public Material normalMaterial;
+    public Material NotAblePutMaterial;
+
+    //实例化的材质，用于动态更新材质动画
+    private Material activeMatInstance;
+    private Material NotAblePutMatInstance;
     public void Init(int _raw, int _column)
     {
         Raw = _raw;
         Column = _column;
+        // 记录当前 slot 默认使用的线材质，作为 normal 状态的模板
+        normalMaterial = GetComponentInChildren<LineRenderer>().sharedMaterial;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -66,7 +74,7 @@ public class SlotController : MonoBehaviour
             //设置卡牌的位置，大小，父物体
             currentCard.transform.SetParent(transform);
             currentCard.transform.localPosition = Vector3.zero;
-            currentCard.transform.localScale = Vector3.one;
+            currentCard.transform.localScale = Vector3.one * 1.1f;
             currentCard.GetComponent<SortingGroup>().sortingOrder = 1;
             isEmpty = false;
             Debug.Log($"Place Card at Slot ({Raw}, {Column})");

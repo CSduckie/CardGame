@@ -34,11 +34,15 @@ public class GameBoardController : MonoBehaviour
         currentSlot.isEmpty = true;
 
         //移动动画
-        _card.transform.DOMove(targetSlot.transform.position, 0.5f).onComplete = () => {
+        Sequence newCardAnim = DOTween.Sequence();
+        newCardAnim.Append(_card.transform.DOScale(Vector3.one * 1.2f, 0.25f));
+        newCardAnim.Append(_card.transform.DOMove(targetSlot.transform.position, 0.5f));
+        newCardAnim.Play();
+        newCardAnim.onComplete = () => {
             _card.transform.SetParent(targetSlot.transform);
             _card.transform.localPosition = Vector3.zero;
             _card.transform.localRotation = Quaternion.identity;
-            _card.transform.localScale = Vector3.one;
+            _card.transform.localScale = Vector3.one * 1.1f;
         };
 
         //更新卡片UI
@@ -69,6 +73,7 @@ public class GameBoardController : MonoBehaviour
         return false;
     }
     
+
     //造成伤害计算
     //于回合结束时调用
     public void CalculateDamage()

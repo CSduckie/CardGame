@@ -8,5 +8,6 @@ public class GameOverPanel : MonoBehaviour
     public void OnBackToStartButtonClicked()
     {
         loadMenuEvent.RaisEvent(null, this);
+        GameManager.Instance.isGameFailed = true;
     }
 }
