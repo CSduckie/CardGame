@@ -22,13 +22,13 @@ public class EnemyUIController : MonoBehaviour
     public void UpdateEnemyUI(float remainingHealth)
     {
         if(enemyController == null) return;
-        enemyHealthGreenBar.fillAmount = remainingHealth / enemyController.health;
+        enemyHealthGreenBar.fillAmount = remainingHealth / enemyController.enemyMaxHealth;
         enemyHealthRedBar.fillAmount = 1- enemyHealthGreenBar.fillAmount;
     }
 
     //预测敌人剩余血量
     public void UpdateEnemyPredictHealth(float damage)
     {
-        enemyHealthOrangeBar.fillAmount = enemyHealthRedBar.fillAmount + (damage / enemyController.health);
+        enemyHealthOrangeBar.fillAmount = enemyHealthRedBar.fillAmount + (damage / enemyController.enemyMaxHealth);
     }
 }

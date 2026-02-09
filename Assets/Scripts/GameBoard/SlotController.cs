@@ -7,6 +7,8 @@ public class SlotController : MonoBehaviour
     public bool isMultiply = false;
     public bool isEmpty = true;
     public Card currentCard;
+    public bool isSpecial = false;
+    public SpecialGridType specialGridType;
     
     [Header("slot自己的坐标位置")]
     public int Raw, Column;

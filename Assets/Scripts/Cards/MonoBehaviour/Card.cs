@@ -20,9 +20,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Sequence currentSequence;
     public bool isAnimating = false;
     public bool isPlaced = false;
-    [Header("卡牌是否被眩晕")]
-    public bool isStun = false;
 
+    [Header("卡牌是否被眩晕")]
+    public bool isFreeze = false;
+    public bool isPoison = false;
+    public bool isTrap = false;
 
     [Header("事件")]
     public ObjectEventSO discardCardEvent;
@@ -113,7 +115,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         currentSequence.Play();
         currentSequence.onComplete += () => {
             currentSequence.Kill();
-            Debug.Log("OnMouseDown Complete");
         };
     }
     private void OnMouseUp() 
@@ -146,6 +147,11 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void MoveRight()
     {
         if(!isPlaced) return;
+        if(isFreeze)
+        {
+            isFreeze = false;
+            return;
+        }
         GameBoardController gameBoard = GetComponentInParent<GameBoardController>();
         int myRow = transform.parent.GetComponent<SlotController>().Raw;
         int myColumn = transform.parent.GetComponent<SlotController>().Column;
@@ -161,7 +167,6 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             gameBoard.MoveCardToRight(myRow, myColumn,this);
         }
         //TODO:更新UI
-        
     }
 
     ///卡牌放置效果
@@ -191,4 +196,5 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 break;
         }
     }
+
 }

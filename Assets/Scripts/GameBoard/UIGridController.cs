@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 public class UIGridController : MonoBehaviour
 {
     public GameObject gridPrefab;
@@ -10,6 +10,14 @@ public class UIGridController : MonoBehaviour
     public int row, column;
     [Header("事件广播")]
     public ObjectEventSO gameStartEvent;
+
+    [Header("特殊地格")]
+    public int specialGridCount;
+    private int loopTime = 0;
+    private int maxTryTime = 100;
+    //记录特殊格子索引
+    public List<int> specialGridList = new();
+
     void Start()
     {
         Invoke("CreateGrid",1);
@@ -21,8 +29,12 @@ public class UIGridController : MonoBehaviour
         GameObject gameBoard = Instantiate(gameBoardPrefab, transform.position, Quaternion.identity);
         gameBoard.GetComponent<GameBoardController>().row = row;
         gameBoard.GetComponent<GameBoardController>().column = column;
+
+        CreateSpecialGridList();
+
+
         //遍历所有子物体，给每一个创建一个grid
-        for(int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             var child = transform.GetChild(i);
             //UI元素，进行坐标转换
@@ -33,7 +45,7 @@ public class UIGridController : MonoBehaviour
             currentSlot.Init((i / column) + 1, (i % column) + 1);
 
             //设置slot的value
-            if(i % 5 == 0)
+            if (i % 5 == 0)
             {
                 currentSlot.value = 0;
             }
@@ -44,8 +56,56 @@ public class UIGridController : MonoBehaviour
             }
 
             newGrid.transform.SetParent(gameBoard.transform);
+
+            //设置slot是否为特殊格子
+            foreach (int index in specialGridList)
+            {
+                if (index == i)
+                {
+                    currentSlot.isSpecial = true;
+                    //随机一个格子类型
+                    SpecialGridType randomType = 
+                    (SpecialGridType)Random.Range(0, SpecialGridType.GetValues(typeof(SpecialGridType)).Length);
+                    switch(randomType)
+                    {
+                        case SpecialGridType.Cold:
+                            currentSlot.GetComponent<SpriteRenderer>().color = Color.blue;
+                            currentSlot.specialGridType = SpecialGridType.Cold;
+                            break;
+                        case SpecialGridType.Trap:
+                            currentSlot.GetComponent<SpriteRenderer>().color = Color.red;
+                            currentSlot.specialGridType = SpecialGridType.Trap;
+                            break;
+                        case SpecialGridType.Posion:
+                            currentSlot.GetComponent<SpriteRenderer>().color = Color.green;
+                            currentSlot.specialGridType = SpecialGridType.Posion;
+                            break;
+                    }
+                }
+            }
         }
         gameStartEvent.RaisEvent(null, this);
+        specialGridList.Clear();
         Destroy(gameObject);
+    }
+
+    private void CreateSpecialGridList()
+    {
+        //赋值特殊格子数量，后续用于随机选择特殊格子
+        specialGridCount = FindFirstObjectByType<EnemyController>().enemyData.specialGridCount;
+        //随机选择特殊格子，
+        while (loopTime < specialGridCount && loopTime < maxTryTime)
+        {
+            loopTime++;
+            int randomIndex = Random.Range(0, transform.childCount);
+            int x = randomIndex % column;
+            //如果是第一行，则跳过
+            if (x == 0) continue;
+            //如果列表中已经存在，则跳过
+            if (specialGridList.Contains(randomIndex)) continue;
+
+            specialGridList.Add(randomIndex);
+            Debug.Log("特殊格子索引：" + randomIndex);
+        }
     }
 }

@@ -59,6 +59,22 @@ public class GameBoardController : MonoBehaviour
         }
         _card.GetComponent<Card>().attackText.text = newCardValue.ToString();
 
+        //检查是否是特殊格子
+        if (targetSlot.isSpecial)
+        {
+            switch (targetSlot.specialGridType)
+            {
+                case SpecialGridType.Cold:
+                    _card.GetComponent<Card>().isFreeze = true;
+                    break;
+                case SpecialGridType.Posion:
+                    _card.GetComponent<Card>().isPoison = true;
+                    break;
+                case SpecialGridType.Trap:
+                    _card.GetComponent<Card>().isTrap = true;
+                    break;
+            }
+        }
     }
 
     public bool isRightHaveObject(int _row, int _column)
@@ -67,7 +83,7 @@ public class GameBoardController : MonoBehaviour
         var targetSlot = transform.GetChild((_row-1) * column + _column - 1).GetComponent<SlotController>();
         if(targetSlot.currentCard != null)
         {
-            if(targetSlot.currentCard.GetComponent<Card>().isStun)
+            if(targetSlot.currentCard.GetComponent<Card>().isFreeze)
                 return true;
         }
         return false;

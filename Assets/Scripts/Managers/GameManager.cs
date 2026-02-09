@@ -19,14 +19,16 @@ public class GameManager : MonoBehaviour
     public bool isFirstTurn = true;
     [Header("事件广播")]
     public ObjectEventSO gameFailedEvent;
-
-    
     public static GameManager Instance;
+
+    //动态难度计数器
+    public int roomsEntered;
     private void Awake()
     {
         Instance = this;
         cardDeck = FindFirstObjectByType<CardDeck>();
         isGameFailed = false;
+        roomsEntered = 0;
     }
 
     /// <summary>

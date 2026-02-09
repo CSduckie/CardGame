@@ -45,6 +45,7 @@ public class SceneLoadManager : MonoBehaviour
         await LoadSceneTask();
 
         afterRoomLoadedEvent.RaisEvent(currentRoom, this);
+        GameManager.Instance.roomsEntered++;
     }
 
     //使用新方法执行加载场景，该方法允许等待若干秒后执行

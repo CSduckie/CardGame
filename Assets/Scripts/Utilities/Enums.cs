@@ -31,3 +31,17 @@ public enum EffectTargetType
     Enemy,
     All,
 }
+
+public enum EnemyType
+{
+    MinorEnemy,
+    EliteEnemy,
+    Boss,
+}
+
+public enum SpecialGridType
+{
+    Cold,
+    Trap,
+    Posion,
+}

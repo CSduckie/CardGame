@@ -741,6 +741,7 @@ MonoBehaviour:
   row: 3
   column: 5
   gameStartEvent: {fileID: 11400000, guid: 8ce2e7258260fe643ac88f24301f187f, type: 2}
+  specialGridCount: 0
 --- !u!1 &608089748
 GameObject:
   m_ObjectHideFlags: 0
@@ -1737,6 +1738,10 @@ PrefabInstance:
       propertyPath: health
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 90720621838991567, guid: 68a8866eb0f9e4a46ab9a4b9be69280e, type: 3}
+      propertyPath: enemyData
+      value: 
+      objectReference: {fileID: 11400000, guid: f24bd4b1632b43940a3c0d2772d6e0a3, type: 2}
     - target: {fileID: 6404450801251720164, guid: 68a8866eb0f9e4a46ab9a4b9be69280e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
