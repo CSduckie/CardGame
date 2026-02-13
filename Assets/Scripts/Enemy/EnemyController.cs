@@ -28,7 +28,7 @@ public class EnemyController : MonoBehaviour
         if(currentHealth <= 0)
         {
             currentHealth = 0;
-            Debug.Log("敌人死亡");
+            // Debug.Log("敌人死亡");
             enemyUI.UpdateEnemyUI(currentHealth);
             enemyUI.enemyController = null;
             //启动游戏结束事件，进入游戏结束流程

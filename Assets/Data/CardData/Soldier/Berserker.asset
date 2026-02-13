@@ -10,13 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0164303604d054e45850313526fef96f, type: 3}
-  m_Name: Knight
+  m_Name: Berserker
   m_EditorClassIdentifier: Assembly-CSharp::CardDataSO
-  cardName: Knight
-  cardImage: {fileID: 21300000, guid: bf214a40e48f5434dbda994699fdb589, type: 3}
+  cardName: Berserker
+  cardImage: {fileID: 21300000, guid: 02eccec56ec870649880f7f540eca4db, type: 3}
   cardType: 0
   isMultiply: 0
-  Attack: 3
+  Attack: 12
   health: 3
   cost: 2
-  description: This is a Knight
+  effects:
+  - {fileID: 11400000, guid: 9dd11516c364b7f4b83cfc3d6112dc41, type: 2}
+  - {fileID: 11400000, guid: 6b3c378d273d2884a954eb709e2c7442, type: 2}
+  description: This is a Berserker

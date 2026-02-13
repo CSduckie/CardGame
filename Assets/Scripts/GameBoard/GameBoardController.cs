@@ -28,7 +28,7 @@ public class GameBoardController : MonoBehaviour
         targetSlot.currentCard = _card;
         targetSlot.isEmpty = false;
         _card.isPlaced = true;
-        
+
         var currentSlot = transform.GetChild((_row-1) * column + _column - 1).GetComponent<SlotController>();
         currentSlot.currentCard = null;
         currentSlot.isEmpty = true;
@@ -38,42 +38,50 @@ public class GameBoardController : MonoBehaviour
         newCardAnim.Append(_card.transform.DOScale(Vector3.one * 1.2f, 0.25f));
         newCardAnim.Append(_card.transform.DOMove(targetSlot.transform.position, 0.5f));
         newCardAnim.Play();
-        newCardAnim.onComplete = () => {
+        newCardAnim.onComplete = () =>
+        {
             _card.transform.SetParent(targetSlot.transform);
             _card.transform.localPosition = Vector3.zero;
             _card.transform.localRotation = Quaternion.identity;
             _card.transform.localScale = Vector3.one * 1.1f;
-        };
 
+            //在正确更新了父子关系后，执行卡牌的每个Effect的OnTurnEnd效果
+            _card.CardOnTurnEndEffect(_card);
+            //更新卡片UI
+            UpdateCardUI(_card, targetSlot);
+        };
+    }
+
+
+    //更新卡片UI
+    private void UpdateCardUI(Card _card, SlotController _cardSlot)
+    {
         //更新卡片UI
         //新的伤害值
         int newCardValue = 0;
         //判断当前卡牌和新slot是否都是Multiply
-        if(targetSlot.isMultiply)
+        int cardBaseAttack = _card.cardData.Attack + _card.cardAttackModifier;
+        //Debug.Log("cardBaseAttack: " + cardBaseAttack);
+        //Debug.Log("_card.cardAttackModifier: " + _card.cardAttackModifier);
+        if (_cardSlot.isMultiply)
         {
-            newCardValue = _card.cardData.Attack * targetSlot.value;
+            newCardValue = cardBaseAttack * _cardSlot.value;
         }
         else
         {
-            newCardValue = _card.cardData.Attack + targetSlot.value;
+            newCardValue = cardBaseAttack + _cardSlot.value;
         }
-        _card.GetComponent<Card>().attackText.text = newCardValue.ToString();
+
+        //检查卡牌是否处于不受任何modifier影响状态
+        if (!_card.GetComponent<Card>().isIgnoreModifier)
+        {
+            _card.GetComponent<Card>().attackText.text = newCardValue.ToString();
+        }
 
         //检查是否是特殊格子
-        if (targetSlot.isSpecial)
+        if (_cardSlot.isSpecial)
         {
-            switch (targetSlot.specialGridType)
-            {
-                case SpecialGridType.Cold:
-                    _card.GetComponent<Card>().isFreeze = true;
-                    break;
-                case SpecialGridType.Posion:
-                    _card.GetComponent<Card>().isPoison = true;
-                    break;
-                case SpecialGridType.Trap:
-                    _card.GetComponent<Card>().isTrap = true;
-                    break;
-            }
+            _card.GetComponent<Card>().CardOnSpecialGridEffect(_cardSlot.specialGridType);
         }
     }
 
@@ -88,7 +96,6 @@ public class GameBoardController : MonoBehaviour
         }
         return false;
     }
-    
 
     //造成伤害计算
     //于回合结束时调用
@@ -105,7 +112,7 @@ public class GameBoardController : MonoBehaviour
                 Card currentCard = transform.GetChild(i).GetComponentInChildren<Card>();
                 SlotController currentSlot = transform.GetChild(i).GetComponent<SlotController>();
 
-                if(currentCard.cardData.isMultiply)
+                if(currentCard.isMultiply)  
                 {
                     multiplyValue += int.Parse(currentCard.attackText.text);
                 }

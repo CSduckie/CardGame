@@ -46,6 +46,10 @@ public class PickCardPanel : MonoBehaviour
     public void OnConfirmButtonClicked()
     {
         cardManager.AddNewCardToLibrary(currentCardData);
+        //卡牌库进行洗牌：
+        CardDeck cardDeck = FindFirstObjectByType<CardDeck>();
+        cardDeck.ReleaseAllCards(null);
+
         //调用GameManager，启动gamewinpanel，关闭当前panel，同时禁用选择卡牌按钮
         GameManager.Instance.gameWinPanel.SetActive(true);
         GameManager.Instance.gameWinPanel.GetComponent<GameWinPanel>().SelectCardButton.interactable = false;

@@ -79,7 +79,7 @@ public class SlotController : MonoBehaviour
             currentCard.transform.localScale = Vector3.one * 1.1f;
             currentCard.GetComponent<SortingGroup>().sortingOrder = 1;
             isEmpty = false;
-            Debug.Log($"Place Card at Slot ({Raw}, {Column})");
+            // Debug.Log($"Place Card at Slot ({Raw}, {Column})");
         }
     }
 }

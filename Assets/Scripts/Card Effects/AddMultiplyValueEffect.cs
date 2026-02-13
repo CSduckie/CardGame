@@ -12,4 +12,6 @@ public class AddMultiplyValueEffect : Effect
         gameBoard.UpdateEnemyPredictHealth();
         Destroy(from.gameObject);
     }
+    public override void ExecuteOnTurnEnd(Card from){}
+    public override void ExecuteOnDestroy(Card from){}
 }

@@ -9,7 +9,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public CardType cardType;
     public bool isMultiply;
     public SpriteRenderer cardSprite;
-    public TextMeshPro attackText, healthText, costText, cardName, cardDescription,typeText;
+    public TextMeshPro attackText, multiplyText, cardName, cardDescription,typeText;
 
     private bool isDragging = false;
 
@@ -24,11 +24,17 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [Header("卡牌是否被眩晕")]
     public bool isFreeze = false;
     public bool isPoison = false;
-    public bool isTrap = false;
+    public bool onTower = false;
+
+    //卡牌是否处于不受任何modifier影响状态
+    public bool isIgnoreModifier = false;
+    public bool isIgnoreSlotEffect = false;
 
     [Header("事件")]
     public ObjectEventSO discardCardEvent;
 
+    [Header("卡牌临时数值")]
+    public int cardAttackModifier = 0;
     private void Start()
     {
         Init(cardData);
@@ -41,11 +47,13 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         cardName.text = _cardData.cardName;
         cardSprite.sprite = _cardData.cardImage;
         attackText.text = _cardData.Attack.ToString();
-        healthText.text = _cardData.health.ToString();
-        costText.text = _cardData.cost.ToString();
         cardDescription.text = _cardData.description;
         cardType = _cardData.cardType;
         isMultiply = _cardData.isMultiply;
+        multiplyText.text = isMultiply? "X" : "+";
+        cardAttackModifier = 0;
+        isIgnoreSlotEffect = false;
+        isIgnoreModifier = false;
         typeText.text = _cardData.cardType switch
         {
             CardType.Soldier => "Soldier",
@@ -77,7 +85,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if(isAnimating) return;
         if(isPlaced) return;
         if(PlayerHandManager.instance.isDraggingCard) return;
-        Debug.Log("OnPointerEnter");
+        //Debug.Log("OnPointerEnter");
         //动画序列
         currentSequence?.Kill();
         currentSequence = DOTween.Sequence();
@@ -99,7 +107,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if(isAnimating) return;
         if(isPlaced) return;
         if(PlayerHandManager.instance.isDraggingCard) return;
-        Debug.Log("OnPointerExit");
+        //Debug.Log("OnPointerExit");
         ResetCardTransform();
     }
 
@@ -128,7 +136,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void ResetCardTransform()
     {
-        Debug.Log("ResetCardTransform");
+        //Debug.Log("ResetCardTransform");
         isAnimating = true;
         currentSequence?.Kill();
         currentSequence = DOTween.Sequence();
@@ -197,4 +205,41 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
     }
 
+    public void CardOnTurnEndEffect(Card _card)
+    {
+        if(_card.cardData.cardType != CardType.Soldier) return;
+        foreach(var effect in cardData.effects)
+        {
+            effect.ExecuteOnTurnEnd(_card);
+        }
+    }
+
+    //卡牌处于特殊地格的效果
+    public void CardOnSpecialGridEffect(SpecialGridType _specialGridType)
+    {
+        switch(_specialGridType)
+        {
+            case SpecialGridType.Cold:
+                isFreeze = true;
+                break;
+            case SpecialGridType.Tower:
+                //在塔上，伤害+2
+                if(!isIgnoreSlotEffect)
+                {
+                    attackText.text = (int.Parse(attackText.text) + 2).ToString();
+                }
+                onTower = true;
+                break;
+            case SpecialGridType.Posion:
+                //中毒时，伤害/2
+                if(!isIgnoreSlotEffect)
+                {
+                    attackText.text = (int.Parse(attackText.text) / 2).ToString();
+                }
+                isPoison = true;
+                break;
+            case SpecialGridType.None:
+                break;
+        }
+    }
 }

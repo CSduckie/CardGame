@@ -67,20 +67,20 @@ public class TurnBaseManager : MonoBehaviour
     {
         isEnemyTurn = true;
         enemyTurnStartEvent.RaisEvent(null, this);
-        Debug.Log("Enemy Turn Start");
+        // Debug.Log("Enemy Turn Start");
     }
 
     public void EnemyTurnEnd()
     {
         isEnemyTurn = false;
         enemyTurnEndEvent.RaisEvent(null, this);
-        Debug.Log("Enemy Turn End");
+        // Debug.Log("Enemy Turn End");
     }
 
     public void GameEnd()
     {
         battleEnd = true;
-        Debug.Log("Game End");
+        // Debug.Log("Game End");
     }
 
     /// <summary>
@@ -95,7 +95,7 @@ public class TurnBaseManager : MonoBehaviour
             case RoomType.MinorEnemy:
             case RoomType.EliteEnemy:
             case RoomType.Boss:
-                Debug.Log("战斗开始");
+                //Debug.Log("战斗开始");
                 GameStart();
                 break;
             case RoomType.Shop:

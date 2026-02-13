@@ -309,10 +309,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a176d858c9e2e4187352e7e125076e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThiefController
-  enemyImage: {fileID: 21300000, guid: 624748d5d99a6473782022e12a908f1e, type: 3}
-  health: 50
+  enemyData: {fileID: 11400000, guid: d3338f373677f5f4caf32f062d2cd9b3, type: 2}
   currentHealth: 0
   enemyUI: {fileID: 0}
+  enemyMaxHealth: 0
   gameEndEvent: {fileID: 11400000, guid: d9c155a51f68f084f85cb2e9815443b9, type: 2}
 --- !u!1 &381473819
 GameObject:
@@ -1632,6 +1632,8 @@ MonoBehaviour:
   row: 3
   column: 5
   gameStartEvent: {fileID: 11400000, guid: 8ce2e7258260fe643ac88f24301f187f, type: 2}
+  specialGridCount: 0
+  specialGridList: 
 --- !u!114 &1531671565
 MonoBehaviour:
   m_ObjectHideFlags: 0

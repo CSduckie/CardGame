@@ -41,7 +41,8 @@ public enum EnemyType
 
 public enum SpecialGridType
 {
+    None,
     Cold,
-    Trap,
+    Tower,
     Posion,
 }

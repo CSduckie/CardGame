@@ -62,7 +62,7 @@ public class CardDeck : MonoBehaviour
                 //启动事件告诉GameManager没有待抽的牌了
                 //于GameManager中调用
             }
-            Debug.Log("No more card to draw");
+            // Debug.Log("No more card to draw");
             return;
         }
 

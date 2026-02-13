@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     
     [Header("其他Manager")]
     public GameBoardController gameBoardController;
+    public CardLayoutManager cardLayoutManager;
     public CardDeck cardDeck;
     
     [Header("游戏是否失败")]
@@ -41,6 +42,13 @@ public class GameManager : MonoBehaviour
             if(isFirstTurn)
             {
                 isFirstTurn = false;
+                return;
+            }
+            //TODO:检查手牌是否还有卡牌，如果有，则不失败，同时禁用EndTurn按钮
+            //通过检查CardLayoutManager中的CardPositionList是否还有卡牌，如果有，则不失败，同时禁用EndTurn按钮
+            if(cardLayoutManager.cardPos.Count > 0)
+            {
+                gamePlayPanel.endTurnButton.interactable = false;
                 return;
             }
             isGameFailed = true;

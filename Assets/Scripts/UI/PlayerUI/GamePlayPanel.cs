@@ -86,7 +86,7 @@ public class GamePlayPanel : MonoBehaviour
 
         foreach(var card in allCards)
         {
-            if(card.cardData.isMultiply)
+            if(card.isMultiply)
             {
                 multiplyValue += int.Parse(card.attackText.text);
             }

@@ -15,6 +15,24 @@ MonoBehaviour:
   m_GroupName: Card
   m_GUID: 9abef10d12a6cf741b4a3f9734153521
   m_SerializeEntries:
+  - m_GUID: 15d65b15638643a4192fb639a43c190b
+    m_Address: Berserker
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CardData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 23871ad5e9b50ac4bb3e72e94fde6533
+    m_Address: Samurai
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CardData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4d499b938e7e285488b20cf20904288c
+    m_Address: Sapper
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CardData
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 900678c32990ac64faf9c22e2ff9d0ab
     m_Address: Commander
     m_ReadOnly: 0
@@ -23,6 +41,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9022a0c41448c2645b5500496ed83db7
     m_Address: AddMultiplySkill
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CardData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9310c8749344ab844b951031c3a7f1b1
+    m_Address: Farmer
     m_ReadOnly: 0
     m_SerializedLabels:
     - CardData

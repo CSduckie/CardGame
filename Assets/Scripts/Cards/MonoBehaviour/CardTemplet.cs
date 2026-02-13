@@ -24,7 +24,7 @@ public class CardTemplet : MonoBehaviour
 
     public void OnCardClicked()
     {
-        Debug.Log("OnCardClicked: " + currentCardData.cardName);
+        // Debug.Log("OnCardClicked: " + currentCardData.cardName);
         cardButton.interactable = false;
         GetComponentInParent<PickCardPanel>().OnCardClicked(cardButton, currentCardData);
     }

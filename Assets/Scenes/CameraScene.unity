@@ -1241,10 +1241,12 @@ MonoBehaviour:
   gameLosePanel: {fileID: 2010507998}
   pickCardPanel: {fileID: 1135520583}
   gameBoardController: {fileID: 0}
+  cardLayoutManager: {fileID: 1380759446}
   cardDeck: {fileID: 0}
   isGameFailed: 0
   isFirstTurn: 1
   gameFailedEvent: {fileID: 11400000, guid: fa006c7979a4cc74590a7f2a62bc7414, type: 2}
+  roomsEntered: 0
 --- !u!4 &671247129
 Transform:
   m_ObjectHideFlags: 0

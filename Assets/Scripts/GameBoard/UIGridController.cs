@@ -72,9 +72,9 @@ public class UIGridController : MonoBehaviour
                             currentSlot.GetComponent<SpriteRenderer>().color = Color.blue;
                             currentSlot.specialGridType = SpecialGridType.Cold;
                             break;
-                        case SpecialGridType.Trap:
+                        case SpecialGridType.Tower:
                             currentSlot.GetComponent<SpriteRenderer>().color = Color.red;
-                            currentSlot.specialGridType = SpecialGridType.Trap;
+                            currentSlot.specialGridType = SpecialGridType.Tower;
                             break;
                         case SpecialGridType.Posion:
                             currentSlot.GetComponent<SpriteRenderer>().color = Color.green;
@@ -105,7 +105,7 @@ public class UIGridController : MonoBehaviour
             if (specialGridList.Contains(randomIndex)) continue;
 
             specialGridList.Add(randomIndex);
-            Debug.Log("特殊格子索引：" + randomIndex);
+            // Debug.Log("特殊格子索引：" + randomIndex);
         }
     }
 }
