@@ -14,8 +14,8 @@ public class EnemyController : MonoBehaviour
     {
 
         enemyUI = FindFirstObjectByType<EnemyUIController>();
-        currentHealth = enemyData.health  + GameManager.Instance.roomsEntered * 2;
-        enemyMaxHealth = enemyData.health;
+        enemyMaxHealth = enemyData.health  + GameManager.Instance.roomsEntered * 2;
+        currentHealth = enemyMaxHealth;
         Debug.Log("敌人血量：" + currentHealth);
         enemyUI.enemyController = this;
         enemyUI.InitializeEnemyUI();
