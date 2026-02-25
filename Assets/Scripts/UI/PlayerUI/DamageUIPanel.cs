@@ -6,4 +6,5 @@ public class DamageUIPanel : MonoBehaviour
     public TextMeshProUGUI addValueText;
     public TextMeshProUGUI multiplyValueText;
     public TextMeshProUGUI totalValueText;
+    public TextMeshProUGUI floatValueText;
 }

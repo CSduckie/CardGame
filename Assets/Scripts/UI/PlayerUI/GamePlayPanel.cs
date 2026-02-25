@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System.Collections;
 public class GamePlayPanel : MonoBehaviour
 {
     [Header("事件广播")]
@@ -86,6 +87,7 @@ public class GamePlayPanel : MonoBehaviour
 
         foreach(var card in allCards)
         {
+            //Debug.Log("卡牌名称：" + card.cardName.text);
             if(card.isMultiply)
             {
                 multiplyValue += int.Parse(card.attackText.text);
@@ -108,8 +110,24 @@ public class GamePlayPanel : MonoBehaviour
         totalValue = addValue * multiplyValue;
         //Debug.Log("总伤害：" + totalValue);
         //更新UI
+        StartCoroutine(UpdateDamageUIAnimation(damageCalculationUI.addValueText, addValue, 1f));
+        StartCoroutine(UpdateDamageUIAnimation(damageCalculationUI.multiplyValueText, multiplyValue, 1f));
+        StartCoroutine(UpdateDamageUIAnimation(damageCalculationUI.totalValueText, totalValue, 1f));
+        /*
         damageCalculationUI.addValueText.text = addValue.ToString();
         damageCalculationUI.multiplyValueText.text = multiplyValue.ToString();
         damageCalculationUI.totalValueText.text = totalValue.ToString();
+        */
+    }
+
+    private IEnumerator UpdateDamageUIAnimation(TextMeshProUGUI targetText, int targetValue,float animationTime)
+    {
+        float animationTimePerStep = animationTime / (targetValue - int.Parse(targetText.text));
+        while(int.Parse(targetText.text) < targetValue)
+        {
+            targetText.text = (int.Parse(targetText.text) + 1).ToString();
+            yield return new WaitForSeconds(animationTimePerStep);
+        }
+        targetText.text = targetValue.ToString();
     }
 }

@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDataSO
   enemyImage: {fileID: 21300000, guid: dc69e41af30824de782b3f936f761fee, type: 3}
   enemyType: 0
-  health: 50
-  specialGridCount: 3
+  health: 100
+  specialGridCount: 5
+  specialGridTypes: 4

@@ -3,12 +3,15 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.EventSystems;
 using DG.Tweening;
+using System.Collections.Generic;
+using System.Collections;
 public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public CardDataSO cardData;
     public CardType cardType;
     public bool isMultiply;
     public SpriteRenderer cardSprite;
+    public SpriteRenderer cardBack;
     public TextMeshPro attackText, multiplyText, cardName, cardDescription,typeText;
 
     private bool isDragging = false;
@@ -32,6 +35,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     [Header("事件")]
     public ObjectEventSO discardCardEvent;
+    //卡牌死亡事件
+    public ObjectEventSO cardDestroyEvent;
 
     [Header("卡牌临时数值")]
     public int cardAttackModifier = 0;
@@ -155,9 +160,16 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void MoveRight()
     {
         if(!isPlaced) return;
-        if(isFreeze)
+        if(isFreeze) 
         {
-            isFreeze = false;
+            Debug.Log("卡牌被冻结，不能移动");
+            //启动一个延迟携程，清除冻结效果
+            StartCoroutine(ClearFreezeEffect());
+            IEnumerator ClearFreezeEffect()
+            {
+                yield return new WaitForSeconds(1f);
+                isFreeze = false;
+            }
             return;
         }
         GameBoardController gameBoard = GetComponentInParent<GameBoardController>();
@@ -165,10 +177,23 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         int myColumn = transform.parent.GetComponent<SlotController>().Column;
         if(gameBoard.isRightHaveObject(myRow, myColumn))
         {
+            Debug.Log("isRightHaveObject");
             var currentSlot = transform.parent.GetComponent<SlotController>();
             currentSlot.currentCard = null;
             currentSlot.isEmpty = true;
-            Destroy(gameObject);
+            //检查是处于最后一列，还是右侧有实际卡牌
+            if(myColumn == gameBoard.column)
+            {
+                DestroyCard(this);
+            }
+            else
+            {
+                //如果是右侧有别的卡牌，那么删除那个地方的卡牌，然后执行移动
+                var targetSlot = gameBoard.transform.GetChild((myRow-1) * gameBoard.column + myColumn).GetComponent<SlotController>();
+                Card targetCard = targetSlot.currentCard;
+                DestroyCard(targetCard);
+                gameBoard.MoveCardToRight(myRow, myColumn,this);
+            }
         }
         else
         {
@@ -176,6 +201,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         //TODO:更新UI
     }
+
 
     ///卡牌放置效果
     public void CardPlacedEffect(Card _card)
@@ -208,6 +234,7 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void CardOnTurnEndEffect(Card _card)
     {
         if(_card.cardData.cardType != CardType.Soldier) return;
+
         foreach(var effect in cardData.effects)
         {
             effect.ExecuteOnTurnEnd(_card);
@@ -220,26 +247,86 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         switch(_specialGridType)
         {
             case SpecialGridType.Cold:
-                isFreeze = true;
+                if(!isIgnoreSlotEffect)
+                {
+                    isFreeze = true;
+                }
                 break;
             case SpecialGridType.Tower:
                 //在塔上，伤害+2
                 if(!isIgnoreSlotEffect)
                 {
                     attackText.text = (int.Parse(attackText.text) + 2).ToString();
+                    onTower = true;
                 }
-                onTower = true;
                 break;
             case SpecialGridType.Posion:
                 //中毒时，伤害/2
                 if(!isIgnoreSlotEffect)
                 {
                     attackText.text = (int.Parse(attackText.text) / 2).ToString();
+                    isPoison = true;
                 }
-                isPoison = true;
+                break;
+            case SpecialGridType.Trap:
+                //陷阱，清除卡牌，然后地格变为None。
+                if(!isIgnoreSlotEffect)
+                {
+                    Debug.Log("陷阱，清除卡牌，然后地格变为None。");
+                    var currentSlot = GetComponentInParent<SlotController>();
+                    currentSlot.specialGridType = SpecialGridType.None;
+                    currentSlot.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0f);
+                    //启动一个携程，让卡牌延迟1秒销毁，确保DOTween动画播放完毕
+                    //TODO: 这里需要优化，添加一个小小的动画效果
+                    StartCoroutine(DestroyCardWithDelay(this,1f));
+                }
                 break;
             case SpecialGridType.None:
                 break;
         }
+    }
+
+    //使用带有延迟的卡牌销毁
+    private IEnumerator DestroyCardWithDelay(Card _card,float _delay)
+    {
+        yield return new WaitForSeconds(_delay);
+        DestroyCard(_card);
+    }
+
+    //卡牌死亡
+    public void DestroyCard(Card _card)
+    {
+        Debug.Log("DestroyCard: " + _card.cardData.cardName);
+
+        //清除内部所有卡牌的携程
+        StopAllCoroutines();
+
+        //执行卡牌死亡效果
+        foreach(var effect in _card.cardData.effects)
+        {
+            effect.ExecuteOnDestroy(this);
+        }
+        //触发其他卡牌死亡事件
+        //使用一个新列表来获取其他卡牌
+        List<Card> otherCards = new List<Card>();
+        foreach(var card in GameManager.Instance.gameBoardController.transform.GetComponentsInChildren<Card>())
+        {
+            if(card!=null && card!= _card)
+            {
+                otherCards.Add(card);
+            }
+        }
+        foreach(var card in otherCards)
+        {
+            foreach(var effect in card.cardData.effects)
+            {
+                effect.ExecuteOnOtherCardsDie(card);
+            }
+        }
+        otherCards.Clear();
+        var cardCurrentSlot = _card.GetComponentInParent<SlotController>();
+        cardCurrentSlot.currentCard = null;
+        cardCurrentSlot.isEmpty = true;
+        Destroy(_card.gameObject);
     }
 }

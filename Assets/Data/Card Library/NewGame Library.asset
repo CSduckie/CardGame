@@ -16,9 +16,9 @@ MonoBehaviour:
   - cardData: {fileID: 11400000, guid: a296d6a9e63dc064f9c0b0f0c5b902c1, type: 2}
     amount: 1
   - cardData: {fileID: 11400000, guid: c14d191b161f748489da67d54bf01d33, type: 2}
-    amount: 1
+    amount: 2
   - cardData: {fileID: 11400000, guid: 9310c8749344ab844b951031c3a7f1b1, type: 2}
-    amount: 1
+    amount: 2
   - cardData: {fileID: 11400000, guid: 15d65b15638643a4192fb639a43c190b, type: 2}
     amount: 1
   - cardData: {fileID: 11400000, guid: 4d499b938e7e285488b20cf20904288c, type: 2}
@@ -26,4 +26,6 @@ MonoBehaviour:
   - cardData: {fileID: 11400000, guid: 23871ad5e9b50ac4bb3e72e94fde6533, type: 2}
     amount: 1
   - cardData: {fileID: 11400000, guid: 1a712b3323d5bab45bd8644aba92cc0d, type: 2}
-    amount: 10
+    amount: 1
+  - cardData: {fileID: 11400000, guid: bdf9f54fea7c69d459972e4347cd7667, type: 2}
+    amount: 5

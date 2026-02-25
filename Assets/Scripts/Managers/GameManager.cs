@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class GameManager : MonoBehaviour
     [Header("事件广播")]
     public ObjectEventSO gameFailedEvent;
     public static GameManager Instance;
+
+    [Header("屏幕震动效果")]
+    public CinemachineImpulseSource turnEndImpulse;
 
     //动态难度计数器
     public int roomsEntered;
@@ -131,7 +135,7 @@ public class GameManager : MonoBehaviour
     //新游戏开始时，清除游戏地图数据
     public void OnNewGameEvent()
     {
-        Debug.Log("新游戏开始，清除游戏地图数据");
+        //Debug.Log("新游戏开始，清除游戏地图数据");
         mapLayout.mapRoomDataList.Clear();
         mapLayout.linePositionsList.Clear();
     }

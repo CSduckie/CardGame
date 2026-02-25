@@ -20,11 +20,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1a712b3323d5bab45bd8644aba92cc0d
-    m_Address: Assets/Data/CardData/Soldier/Bomber.asset
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1e4be79c114baee45a53a29e80dfc605
     m_Address: Reward
     m_ReadOnly: 0

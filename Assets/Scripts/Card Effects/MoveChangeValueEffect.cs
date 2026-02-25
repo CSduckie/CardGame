@@ -19,4 +19,5 @@ public class MoveChangeValueEffect : Effect
 
     }
     public override void ExecuteOnDestroy(Card from){}
+    public override void ExecuteOnOtherCardsDie(Card from) { }
 }

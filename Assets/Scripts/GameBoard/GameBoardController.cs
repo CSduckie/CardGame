@@ -33,13 +33,42 @@ public class GameBoardController : MonoBehaviour
         currentSlot.currentCard = null;
         currentSlot.isEmpty = true;
 
-        //移动动画
-        Sequence newCardAnim = DOTween.Sequence();
-        newCardAnim.Append(_card.transform.DOScale(Vector3.one * 1.2f, 0.25f));
-        newCardAnim.Append(_card.transform.DOMove(targetSlot.transform.position, 0.5f));
-        newCardAnim.Play();
-        newCardAnim.onComplete = () =>
+#region 动画序列
+        //创建移动动画序列
+        Sequence cardFlipAnim = DOTween.Sequence();
+        Sequence cardMoveAnim = DOTween.Sequence();
+        //获取卡背
+        var cardBack = _card.transform.GetChild(1).gameObject;
+        //获取卡面
+        var cardEntry = _card.transform.GetChild(0).gameObject;
+
+        //首先执行卡片ENTRY的缩放动画，然后执行卡片BACK的缩放动画
+        //TODO: 这里需要优化，如果动画时间过长，会出现报空
+        cardFlipAnim.Append(cardEntry.transform.DOScale(new Vector3(0, 1, 1), 0.25f));
+        cardFlipAnim.Append(cardBack.transform.DOScale(new Vector3(-1, 1, 1), 0.25f));
+
+        //初始化移动动画，
+        cardMoveAnim.Append(_card.transform.DOMove(targetSlot.transform.position, 0.5f));
+
+        cardMoveAnim.Append(cardBack.transform.DOScale(new Vector3(0, 1, 1), 0.25f));
+        cardMoveAnim.Append(cardEntry.transform.DOScale(new Vector3(1, 1, 1), 0.25f));
+
+
+
+        cardFlipAnim.Play();
+        //设置动画的播放延迟
+        cardMoveAnim.SetDelay(0.5f);
+        cardFlipAnim.onComplete = () =>
         {
+            //在卡片翻面后更新UI，防止穿帮
+            UpdateCardUI(_card, targetSlot);
+            cardFlipAnim.Kill();
+        };
+
+        cardMoveAnim.onComplete = () =>
+        {
+            //在卡片翻面后更新UI，防止穿帮
+            //更新卡片UI
             _card.transform.SetParent(targetSlot.transform);
             _card.transform.localPosition = Vector3.zero;
             _card.transform.localRotation = Quaternion.identity;
@@ -47,9 +76,10 @@ public class GameBoardController : MonoBehaviour
 
             //在正确更新了父子关系后，执行卡牌的每个Effect的OnTurnEnd效果
             _card.CardOnTurnEndEffect(_card);
-            //更新卡片UI
-            UpdateCardUI(_card, targetSlot);
+            cardMoveAnim.Kill();
         };
+
+#endregion
     }
 
 
@@ -88,11 +118,13 @@ public class GameBoardController : MonoBehaviour
     public bool isRightHaveObject(int _row, int _column)
     {
         if(_column == column) return true;
-        var targetSlot = transform.GetChild((_row-1) * column + _column - 1).GetComponent<SlotController>();
-        if(targetSlot.currentCard != null)
+        var targetSlot = transform.GetChild((_row-1) * column + _column).GetComponent<SlotController>();
+        //Debug.Log("TargetSlot索引" + ((_row-1) * column + _column));
+        //Debug.Log("TargetSlot是否有东西" + (targetSlot.currentCard != null));
+        if(targetSlot.currentCard != null && targetSlot.currentCard.isFreeze) 
         {
-            if(targetSlot.currentCard.GetComponent<Card>().isFreeze)
-                return true;
+            //Debug.Log("TargetSlot是冻结的");
+            return true;
         }
         return false;
     }

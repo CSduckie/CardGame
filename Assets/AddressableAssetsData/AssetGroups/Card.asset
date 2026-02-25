@@ -21,6 +21,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - CardData
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1a712b3323d5bab45bd8644aba92cc0d
+    m_Address: Bomber
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CardData
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 23871ad5e9b50ac4bb3e72e94fde6533
     m_Address: Samurai
     m_ReadOnly: 0
@@ -59,6 +65,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b38c0587f1b215d4eb9049bcdec8cfbf
     m_Address: AddValueSkill
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - CardData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bdf9f54fea7c69d459972e4347cd7667
+    m_Address: Minister
     m_ReadOnly: 0
     m_SerializedLabels:
     - CardData

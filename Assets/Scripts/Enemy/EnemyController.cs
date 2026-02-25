@@ -16,7 +16,7 @@ public class EnemyController : MonoBehaviour
         enemyUI = FindFirstObjectByType<EnemyUIController>();
         enemyMaxHealth = enemyData.health  + GameManager.Instance.roomsEntered * 2;
         currentHealth = enemyMaxHealth;
-        Debug.Log("敌人血量：" + currentHealth);
+//        Debug.Log("敌人血量：" + currentHealth);
         enemyUI.enemyController = this;
         enemyUI.InitializeEnemyUI();
         enemyUI.enemyImage.sprite = enemyData.enemyImage;
@@ -38,6 +38,8 @@ public class EnemyController : MonoBehaviour
         else
         {
             enemyUI.UpdateEnemyUI(currentHealth);
+            GameManager.Instance.turnEndImpulse.GenerateImpulse(0.1f);
+            Debug.Log("敌人受到伤害，屏幕震动");
         }
     }
 }

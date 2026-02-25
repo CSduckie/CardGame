@@ -16,3 +16,4 @@ MonoBehaviour:
   enemyType: 1
   health: 50
   specialGridCount: 5
+  specialGridTypes: -1

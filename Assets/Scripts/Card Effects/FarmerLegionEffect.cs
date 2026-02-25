@@ -59,4 +59,5 @@ public class FarmerLegionEffect : Effect
 
     public override void ExecuteOnTurnEnd(Card from){}
     public override void ExecuteOnDestroy(Card from){}
+    public override void ExecuteOnOtherCardsDie(Card from){}
 }

@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
+using System;
 public class UIGridController : MonoBehaviour
 {
     public GameObject gridPrefab;
@@ -17,9 +19,10 @@ public class UIGridController : MonoBehaviour
     private int maxTryTime = 100;
     //记录特殊格子索引
     public List<int> specialGridList = new();
-
+    public EnemyController enemyCurrentLevel;
     void Start()
     {
+        enemyCurrentLevel = FindFirstObjectByType<EnemyController>();
         Invoke("CreateGrid",1);
     }
 
@@ -63,9 +66,11 @@ public class UIGridController : MonoBehaviour
                 if (index == i)
                 {
                     currentSlot.isSpecial = true;
+
                     //随机一个格子类型
-                    SpecialGridType randomType = 
-                    (SpecialGridType)Random.Range(0, SpecialGridType.GetValues(typeof(SpecialGridType)).Length);
+                    SpecialGridType randomType = GetRandomGridType(enemyCurrentLevel.enemyData.specialGridTypes);
+                    Debug.Log("随机格子类型：" + randomType);
+
                     switch(randomType)
                     {
                         case SpecialGridType.Cold:
@@ -79,6 +84,10 @@ public class UIGridController : MonoBehaviour
                         case SpecialGridType.Posion:
                             currentSlot.GetComponent<SpriteRenderer>().color = Color.green;
                             currentSlot.specialGridType = SpecialGridType.Posion;
+                            break;
+                        case SpecialGridType.Trap:
+                            currentSlot.GetComponent<SpriteRenderer>().color = Color.yellow;
+                            currentSlot.specialGridType = SpecialGridType.Trap;
                             break;
                     }
                 }
@@ -107,5 +116,17 @@ public class UIGridController : MonoBehaviour
             specialGridList.Add(randomIndex);
             // Debug.Log("特殊格子索引：" + randomIndex);
         }
+    }
+
+    //使用本地方法随机选择特殊格子
+    private SpecialGridType GetRandomGridType(SpecialGridType flags)
+    {
+        string[] options = flags.ToString().Split(',');
+
+        string randomOption = options[Random.Range(0, options.Length)];
+
+        SpecialGridType gridType = (SpecialGridType)Enum.Parse(typeof(SpecialGridType),randomOption);
+
+        return gridType;
     }
 }

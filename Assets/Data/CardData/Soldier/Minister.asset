@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0164303604d054e45850313526fef96f, type: 3}
-  m_Name: Commander
+  m_Name: Minister
   m_EditorClassIdentifier: Assembly-CSharp::CardDataSO
-  cardName: Commander
-  cardImage: {fileID: 21300000, guid: bf214a40e48f5434dbda994699fdb589, type: 3}
+  cardName: Minister
+  cardImage: {fileID: 21300000, guid: 1e045ebff7a4f394398aca274b0356a8, type: 3}
   cardType: 0
   isMultiply: 1
   Attack: 1
-  health: 1
+  health: 3
   cost: 2
-  effects: []
-  description: This is a Commander
+  effects:
+  - {fileID: 11400000, guid: 2b7371bcb64033c43974bc13441b0413, type: 2}
+  description: This is a Minister

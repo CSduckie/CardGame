@@ -39,10 +39,13 @@ public enum EnemyType
     Boss,
 }
 
+
+[Flags]
 public enum SpecialGridType
 {
-    None,
-    Cold,
-    Tower,
-    Posion,
+    None,//普通格子
+    Cold,//冻结，不能移动
+    Tower,//在塔上，伤害+2
+    Posion,//中毒，攻击力/2
+    Trap,//陷阱，清除卡牌，然后地格变为None。
 }
