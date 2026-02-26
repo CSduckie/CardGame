@@ -42,8 +42,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public int cardAttackModifier = 0;
     private void Start()
     {
+        GetComponent<SortingGroup>().sortingOrder = 10;
         Init(cardData);
-        GetComponent<SortingGroup>().sortingOrder = 1;
     }
 
     public void Init(CardDataSO _cardData)
@@ -242,9 +242,9 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
 
     //卡牌处于特殊地格的效果
-    public void CardOnSpecialGridEffect(SpecialGridType _specialGridType)
+    public void CardOnSpecialGridEffect(SlotController _targetSlot)
     {
-        switch(_specialGridType)
+        switch(_targetSlot.specialGridType)
         {
             case SpecialGridType.Cold:
                 if(!isIgnoreSlotEffect)
@@ -273,9 +273,8 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 if(!isIgnoreSlotEffect)
                 {
                     Debug.Log("陷阱，清除卡牌，然后地格变为None。");
-                    var currentSlot = GetComponentInParent<SlotController>();
-                    currentSlot.specialGridType = SpecialGridType.None;
-                    currentSlot.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0f);
+                    //传入TargetSlot
+                    StartCoroutine(ClearSpecialGridEffect(_targetSlot));
                     //启动一个携程，让卡牌延迟1秒销毁，确保DOTween动画播放完毕
                     //TODO: 这里需要优化，添加一个小小的动画效果
                     StartCoroutine(DestroyCardWithDelay(this,1f));
@@ -286,6 +285,15 @@ public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
     }
 
+    //清除特殊地格的延迟携程
+    private IEnumerator ClearSpecialGridEffect(SlotController _targetSlot)
+    {
+        yield return new WaitForSeconds(1f);
+        _targetSlot.specialGridType = SpecialGridType.None;
+        _targetSlot.GetComponent<SpriteRenderer>().color = new Color(1,1,1,0f);
+    }
+
+    
     //使用带有延迟的卡牌销毁
     private IEnumerator DestroyCardWithDelay(Card _card,float _delay)
     {

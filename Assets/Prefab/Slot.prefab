@@ -129,9 +129,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 186679219
+  m_SortingLayer: 3
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: bf214a40e48f5434dbda994699fdb589, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
@@ -159,6 +159,8 @@ MonoBehaviour:
   isMultiply: 0
   isEmpty: 1
   currentCard: {fileID: 0}
+  isSpecial: 0
+  specialGridType: 0
   Raw: 0
   Column: 0
   activeMaterial: {fileID: 2100000, guid: 7be639d3961d01a4db4a7c7e188201db, type: 2}

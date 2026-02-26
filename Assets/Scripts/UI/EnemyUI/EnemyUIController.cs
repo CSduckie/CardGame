@@ -55,6 +55,13 @@ public class EnemyUIController : MonoBehaviour
 
         UpdateTextUIAnimation(remainingHealth);
 
+        var damagePercentage = (enemyController.enemyMaxHealth - remainingHealth) / enemyController.enemyMaxHealth;
+        //传入伤害占比
+        if(remainingHealth > 0)
+        {
+            GameManager.Instance.gamePlayPanel.damageCalculationUI.damageBoardShakeAnim(damagePercentage);
+            StartCoroutine(EnemyTakeDamageEffect());
+        }
     }
 
     //更新文本UI动画
@@ -106,5 +113,18 @@ public class EnemyUIController : MonoBehaviour
             yield return new WaitForSeconds(animationTimePerStep);
         }
         enemyHealthText.text = remainingHealth.ToString();
+    }
+
+    //敌人受伤效果携程
+    private IEnumerator EnemyTakeDamageEffect()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            enemyImage.color = Color.red;
+            yield return new WaitForSeconds(0.1f);
+            enemyImage.color = Color.white;
+            yield return new WaitForSeconds(0.1f);
+        }
+        enemyImage.color = Color.white;
     }
 }

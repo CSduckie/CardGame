@@ -44,7 +44,7 @@ public class FarmerLegionEffect : Effect
             //最后计算地格修正
             if(targetSlot.isSpecial)
             {
-                card.CardOnSpecialGridEffect(targetSlot.specialGridType);
+                card.CardOnSpecialGridEffect(targetSlot);
             }
 
             //更新UI

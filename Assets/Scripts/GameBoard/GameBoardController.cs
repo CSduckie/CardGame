@@ -111,7 +111,8 @@ public class GameBoardController : MonoBehaviour
         //检查是否是特殊格子
         if (_cardSlot.isSpecial)
         {
-            _card.GetComponent<Card>().CardOnSpecialGridEffect(_cardSlot.specialGridType);
+            //传入TargetSlot
+            _card.GetComponent<Card>().CardOnSpecialGridEffect(_cardSlot);
         }
     }
 

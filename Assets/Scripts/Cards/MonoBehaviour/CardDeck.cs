@@ -123,7 +123,8 @@ public class CardDeck : MonoBehaviour
 
 
                 //设置卡片层级
-                currentCard.GetComponent<SortingGroup>().sortingOrder = i;
+                //加个10是为了让卡片在UI上方显示
+                currentCard.GetComponent<SortingGroup>().sortingOrder = i + 10;
                 currentCard.SaveOriginalData(cardTransform.pos, cardTransform.rotation);
             }
         }
