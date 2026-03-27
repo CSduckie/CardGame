@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject gameWinPanel;
     public GameObject gameLosePanel;
     public GameObject pickCardPanel;
+    public GameObject rewardRoomPanel;
     
     [Header("其他Manager")]
     public GameBoardController gameBoardController;
@@ -129,6 +130,13 @@ public class GameManager : MonoBehaviour
         gameLosePanel.gameObject.SetActive(false);
     }
 
+    public void ActiveRewardRoomUI()
+    {
+        rewardRoomPanel.gameObject.SetActive(true);
+        gameWinPanel.gameObject.SetActive(false);
+        pickCardPanel.gameObject.SetActive(false);
+        gameLosePanel.gameObject.SetActive(false);
+    }
     #endregion
 
 

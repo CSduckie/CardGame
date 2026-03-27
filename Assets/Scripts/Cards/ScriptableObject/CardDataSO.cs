@@ -9,7 +9,7 @@ public class CardDataSO : ScriptableObject
     public CardType cardType;
     public bool isMultiply;
     public int Attack, health, cost;
-    
+
     //卡牌效果列表
     public List<Effect> effects;
     public string description;

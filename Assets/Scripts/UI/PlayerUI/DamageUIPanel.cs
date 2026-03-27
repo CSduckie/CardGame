@@ -46,21 +46,21 @@ public class DamageUIPanel : MonoBehaviour
         {
             float dt = Time.deltaTime;
 
-            // 1) 回正：角度越偏离0，越想被“拉回去”（产生加速减速 + 过冲）
+            
             vel += (-returnStrength * angle) * dt;
 
-            // 2) 阻尼：让速度逐渐变小（幅度越来越小）
+            //让速度逐渐变小
             vel = Mathf.MoveTowards(vel, 0f, damping * dt);
 
-            // 3) 积分：速度推动角度变化
+            //速度推动角度变化
             angle += vel * dt;
 
-            // 4) 限制最大角度（避免太猛）
+            //限制最大角度
             angle = Mathf.Clamp(angle, -maxAngle, maxAngle);
 
-            // 5) 应用旋转
+            //应用旋转
             damageBoard.transform.rotation = Quaternion.Euler(0f, 0f, angle);
-            // 6) 停止条件：角度几乎为0 且 速度也几乎为0
+            //停止条件：角度几乎为0 且 速度也几乎为0
             if (Mathf.Abs(angle) < stopAngle && Mathf.Abs(vel) < stopAngle)
             {
                 angle = 0f;

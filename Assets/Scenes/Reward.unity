@@ -419,6 +419,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 269607084}
   m_CullTransparentMesh: 1
+--- !u!1 &334167986
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 334167987}
+  - component: {fileID: 334167988}
+  m_Layer: 0
+  m_Name: RewardRoomController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &334167987
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334167986}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &334167988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334167986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75cd1a9bc82b2204ea5ce3ce4e2f0a69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RewardRoomControllers
 --- !u!1 &385045032
 GameObject:
   m_ObjectHideFlags: 0
@@ -1538,7 +1582,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1959319210
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1606,7 +1650,7 @@ Transform:
   m_GameObject: {fileID: 1959319209}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -3.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1670,6 +1714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17186726c47e8d6459067e2019beafd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FinishRoom
+  loadMapEvent: {fileID: 0}
 --- !u!1 &2076449859
 GameObject:
   m_ObjectHideFlags: 0
@@ -1753,3 +1798,4 @@ SceneRoots:
   - {fileID: 957928284}
   - {fileID: 1959319211}
   - {fileID: 574871784}
+  - {fileID: 334167987}

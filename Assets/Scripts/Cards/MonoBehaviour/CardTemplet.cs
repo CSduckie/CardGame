@@ -26,6 +26,14 @@ public class CardTemplet : MonoBehaviour
     {
         // Debug.Log("OnCardClicked: " + currentCardData.cardName);
         cardButton.interactable = false;
-        GetComponentInParent<PickCardPanel>().OnCardClicked(cardButton, currentCardData);
+        //先查看是否是奖励房间，如果是，则调用RewardRoomPanel的OnCardClicked方法
+        if(GetComponentInParent<RewardRoomPanel>() != null)
+        {
+            GetComponentInParent<RewardRoomPanel>().OnRewardSelected(gameObject);
+        }
+        else
+        {
+            GetComponentInParent<PickCardPanel>().OnCardClicked(cardButton, currentCardData);
+        }
     }
 }
